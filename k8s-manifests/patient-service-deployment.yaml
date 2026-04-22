@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\dmrka\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert -f docker-compose.yml
+    kompose.version: 1.38.0 (a8f5d1cbd)
+  labels:
+    io.kompose.service: patient-service
+  name: patient-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: patient-service
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\dmrka\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert -f docker-compose.yml
+        kompose.version: 1.38.0 (a8f5d1cbd)
+      labels:
+        io.kompose.service: patient-service
+    spec:
+      containers:
+        - env:
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: http://eureka-server:8761/eureka/
+            - name: INTERNAL_API_KEY
+              value: your-secret-internal-key
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: 20021021@Rusira
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres:5432/patient_db
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+          image: patient-service
+          name: patient-service
+          ports:
+            - containerPort: 8082
+              protocol: TCP
+      restartPolicy: Always

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\dmrka\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert -f docker-compose.yml
+    kompose.version: 1.38.0 (a8f5d1cbd)
+  labels:
+    io.kompose.service: telemedicine-service
+  name: telemedicine-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: telemedicine-service
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\dmrka\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert -f docker-compose.yml
+        kompose.version: 1.38.0 (a8f5d1cbd)
+      labels:
+        io.kompose.service: telemedicine-service
+    spec:
+      containers:
+        - env:
+            - name: AGORA_APP_CERTIFICATE
+              value: 83a881e9cf58444e944e3428d327806b
+            - name: AGORA_APP_ID
+              value: 561899df7fda4457834c5ee78b138ceb
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: http://eureka-server:8761/eureka/
+            - name: INTERNAL_API_KEY
+              value: your-secret-internal-key
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: 20021021@Rusira
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres:5432/telemedicine_db
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+          image: telemedicine-service
+          name: telemedicine-service
+          ports:
+            - containerPort: 8087
+              protocol: TCP
+      restartPolicy: Always

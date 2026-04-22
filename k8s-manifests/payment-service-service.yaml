@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\dmrka\AppData\Local\Microsoft\WinGet\Packages\Kubernetes.kompose_Microsoft.Winget.Source_8wekyb3d8bbwe\kompose.exe convert -f docker-compose.yml
+    kompose.version: 1.38.0 (a8f5d1cbd)
+  labels:
+    io.kompose.service: payment-service
+  name: payment-service
+spec:
+  ports:
+    - name: "8095"
+      port: 8095
+      targetPort: 8095
+  selector:
+    io.kompose.service: payment-service
