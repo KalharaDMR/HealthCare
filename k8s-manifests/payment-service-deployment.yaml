@@ -25,19 +25,32 @@ spec:
             - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
               value: http://eureka-server:8761/eureka/
             - name: INTERNAL_API_KEY
-              value: your-secret-internal-key
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: INTERNAL_API_KEY
             - name: SPRING_DATASOURCE_PASSWORD
-              value: 20021021@Rusira
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: POSTGRES_PASSWORD
             - name: SPRING_DATASOURCE_URL
               value: jdbc:postgresql://postgres:5432/payment_db
             - name: SPRING_DATASOURCE_USERNAME
               value: postgres
             - name: STRIPE_SECRET_KEY
-              value: ${STRIPE_SECRET_KEY}
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: STRIPE_SECRET_KEY
             - name: STRIPE_WEBHOOK_SECRET_KEY
-              value:
-          image: payment-service
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: STRIPE_WEBHOOK_SECRET_KEY
+          image: payment-service:latest
           name: payment-service
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8095
               protocol: TCP

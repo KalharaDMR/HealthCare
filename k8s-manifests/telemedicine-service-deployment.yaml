@@ -23,21 +23,34 @@ spec:
       containers:
         - env:
             - name: AGORA_APP_CERTIFICATE
-              value: 83a881e9cf58444e944e3428d327806b
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: AGORA_APP_CERTIFICATE
             - name: AGORA_APP_ID
-              value: 561899df7fda4457834c5ee78b138ceb
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: AGORA_APP_ID
             - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
               value: http://eureka-server:8761/eureka/
             - name: INTERNAL_API_KEY
-              value: your-secret-internal-key
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: INTERNAL_API_KEY
             - name: SPRING_DATASOURCE_PASSWORD
-              value: 20021021@Rusira
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: POSTGRES_PASSWORD
             - name: SPRING_DATASOURCE_URL
               value: jdbc:postgresql://postgres:5432/telemedicine_db
             - name: SPRING_DATASOURCE_USERNAME
               value: postgres
-          image: telemedicine-service
+          image: telemedicine-service:latest
           name: telemedicine-service
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8087
               protocol: TCP

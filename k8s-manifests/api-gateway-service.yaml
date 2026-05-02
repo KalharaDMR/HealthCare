@@ -8,6 +8,7 @@ metadata:
     io.kompose.service: api-gateway
   name: api-gateway
 spec:
+  type: NodePort
   ports:
     - name: "8089"
       port: 8089

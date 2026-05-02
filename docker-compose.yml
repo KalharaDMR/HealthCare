@@ -189,12 +189,12 @@ services:
       - healthcare-net
 
 
-  #healthcare-frontend:
-   # image: 2002rusira/healthcare_frontend:v4
-   # ports:
-    #  - "80:80"
-   # networks:
-    #  - healthcare-net
+  healthcare-frontend:
+    image: 2002ramesh/healthcare_frontend:v4
+    ports:
+      - "80:80"
+    networks:
+      - healthcare-net
 networks:
   healthcare-net:
     driver: bridge

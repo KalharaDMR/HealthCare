@@ -27,15 +27,22 @@ spec:
             - name: JWT_EXPIRATION
               value: "3600000"
             - name: JWT_SECRET
-              value: mySecretKeyForJWTGenerationWithAtLeast32CharactersLong
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: JWT_SECRET
             - name: SPRING_DATASOURCE_PASSWORD
-              value: 20021021@Rusira
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: POSTGRES_PASSWORD
             - name: SPRING_DATASOURCE_URL
               value: jdbc:postgresql://postgres:5432/auth_db
             - name: SPRING_DATASOURCE_USERNAME
               value: postgres
-          image: auth-service
+          image: auth-service:latest
           name: auth-service
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8081
               protocol: TCP

@@ -27,9 +27,13 @@ spec:
             - name: JWT_EXPIRATION
               value: "3600000"
             - name: JWT_SECRET
-              value: mySecretKeyForJWTGenerationWithAtLeast32CharactersLong
-          image: api-gateway
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: JWT_SECRET
+          image: api-gateway:latest
           name: api-gateway
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8089
               protocol: TCP

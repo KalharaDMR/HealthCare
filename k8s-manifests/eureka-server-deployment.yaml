@@ -26,8 +26,9 @@ spec:
               value: http://eureka-server:8761/eureka/
             - name: EUREKA_INSTANCE_HOSTNAME
               value: eureka-server
-          image: eureka-server
+          image: eureka-server:latest
           name: eureka-server
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8761
               protocol: TCP

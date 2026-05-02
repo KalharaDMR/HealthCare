@@ -27,13 +27,17 @@ spec:
             - name: INTERNAL_API_KEY
               value: your-secret-internal-key
             - name: SPRING_DATASOURCE_PASSWORD
-              value: 20021021@Rusira
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: POSTGRES_PASSWORD
             - name: SPRING_DATASOURCE_URL
               value: jdbc:postgresql://postgres:5432/admin_db
             - name: SPRING_DATASOURCE_USERNAME
               value: postgres
-          image: admin-service
+          image: admin-service:latest
           name: admin-service
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8088
               protocol: TCP

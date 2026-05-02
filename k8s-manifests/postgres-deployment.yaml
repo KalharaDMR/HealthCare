@@ -27,7 +27,10 @@ spec:
             - name: POSTGRES_DB
               value: postgres
             - name: POSTGRES_PASSWORD
-              value: 20021021@Rusira
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: POSTGRES_PASSWORD
             - name: POSTGRES_USER
               value: postgres
           image: postgres:17

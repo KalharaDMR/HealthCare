@@ -25,19 +25,29 @@ spec:
             - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
               value: http://eureka-server:8761/eureka/
             - name: INTERNAL_API_KEY
-              value: your-secret-internal-key
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: INTERNAL_API_KEY
             - name: JWT_EXPIRATION
               value: "3600000"
             - name: JWT_SECRET
-              value: mySecretKeyForJWTGenerationWithAtLeast32CharactersLong
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: JWT_SECRET
             - name: SPRING_DATASOURCE_PASSWORD
-              value: 20021021@Rusira
+              valueFrom:
+                secretKeyRef:
+                  name: healthcare-secrets
+                  key: POSTGRES_PASSWORD
             - name: SPRING_DATASOURCE_URL
               value: jdbc:postgresql://postgres:5432/appointment_db
             - name: SPRING_DATASOURCE_USERNAME
               value: postgres
-          image: appointment-service
+          image: appointment-service:latest
           name: appointment-service
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8084
               protocol: TCP

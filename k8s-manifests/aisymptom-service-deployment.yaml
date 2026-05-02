@@ -30,8 +30,9 @@ spec:
               value: your-secret-internal-key
             - name: PORT
               value: "8098"
-          image: 2002rusira/aisymptomservice:v2
+          image: aisymptom-service:latest
           name: aisymptom-service
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8098
               protocol: TCP
